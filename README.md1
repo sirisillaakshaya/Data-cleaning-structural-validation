@@ -1,0 +1,114 @@
+# ============================================
+# DATA CLEANING & STRUCTURAL VALIDATION
+# Internship Task - task1
+# ============================================
+
+# Import Required Libraries
+import pandas as pd
+import numpy as np
+
+# --------------------------------------------
+# STEP 1: LOAD DATASET
+# --------------------------------------------
+
+# Replace 'raw_data.csv' with your dataset filename
+df = pd.read_csv('raw_data.csv')
+
+print("\n========== ORIGINAL DATA ==========\n")
+print(df.head())
+
+# --------------------------------------------
+# STEP 2: DATASET INFORMATION
+# --------------------------------------------
+
+print("\n========== DATASET INFO ==========\n")
+print(df.info())
+
+# --------------------------------------------
+# STEP 3: CHECK MISSING VALUES
+# --------------------------------------------
+
+print("\n========== MISSING VALUES ==========\n")
+print(df.isnull().sum())
+
+# --------------------------------------------
+# STEP 4: CHECK DUPLICATE ROWS
+# --------------------------------------------
+
+print("\n========== DUPLICATE ROWS ==========\n")
+print(df.duplicated().sum())
+
+# --------------------------------------------
+# STEP 5: REMOVE DUPLICATES
+# --------------------------------------------
+
+df = df.drop_duplicates()
+
+# --------------------------------------------
+# STEP 6: HANDLE MISSING VALUES
+# --------------------------------------------
+
+# Select numeric columns
+numeric_columns = df.select_dtypes(include=np.number).columns
+
+# Fill numeric missing values with mean
+for col in numeric_columns:
+    df[col] = df[col].fillna(df[col].mean())
+
+# Select text columns
+text_columns = df.select_dtypes(include='object').columns
+
+# Fill text missing values with 'Unknown'
+for col in text_columns:
+    df[col] = df[col].fillna('Unknown')
+
+# --------------------------------------------
+# STEP 7: REMOVE EXTRA SPACES
+# --------------------------------------------
+
+for col in text_columns:
+    df[col] = df[col].str.strip()
+
+# --------------------------------------------
+# STEP 8: STANDARDIZE TEXT FORMAT
+# --------------------------------------------
+
+for col in text_columns:
+    df[col] = df[col].str.lower()
+
+# --------------------------------------------
+# STEP 9: CONVERT DATE FORMAT (OPTIONAL)
+# --------------------------------------------
+
+# Uncomment below line if dataset has date column
+
+# df['date'] = pd.to_datetime(df['date'])
+
+# --------------------------------------------
+# STEP 10: FINAL VALIDATION
+# --------------------------------------------
+
+print("\n========== CLEANED DATA INFO ==========\n")
+print(df.info())
+
+print("\n========== REMAINING MISSING VALUES ==========\n")
+print(df.isnull().sum())
+
+print("\n========== REMAINING DUPLICATES ==========\n")
+print(df.duplicated().sum())
+
+# --------------------------------------------
+# STEP 11: DISPLAY CLEANED DATA
+# --------------------------------------------
+
+print("\n========== CLEANED DATA ==========\n")
+print(df.head())
+
+# --------------------------------------------
+# STEP 12: EXPORT CLEANED DATA
+# --------------------------------------------
+
+df.to_csv('cleaned_data.csv', index=False)
+
+print("\n✅ Data Cleaning Completed Successfully!")
+print("✅ Cleaned file saved as: cleaned_data.csv")
