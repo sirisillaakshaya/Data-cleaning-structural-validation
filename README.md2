@@ -1,0 +1,29 @@
+# Data Cleaning & Structural Validation
+
+## Objective
+Transform raw, unstructured data into a reliable format for analysis by handling:
+- Missing values
+- Duplicate entries
+- Inconsistent text formatting
+- Data validation
+
+## Tools Used
+- Python
+- Pandas
+- NumPy
+
+## Cleaning Process
+1. Loaded raw dataset
+2. Checked dataset structure
+3. Removed duplicate rows
+4. Handled missing values
+5. Standardized text format
+6. Removed extra spaces
+7. Validated cleaned data
+8. Exported cleaned dataset
+
+## Output
+Generated a cleaned dataset ready for analysis.
+
+## Author
+Your Name
